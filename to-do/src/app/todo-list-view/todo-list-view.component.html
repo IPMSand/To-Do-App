@@ -1,0 +1,17 @@
+  
+
+    <h3></h3>
+    <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
+      <nz-list-header></nz-list-header>
+      @for (item of data; track item) {
+        <li nz-list-item nzNoFlex>
+          <ul nz-list-item-actions>
+            <nz-list-item-action>
+              <a (click)="msg.info('edit')">edinnnnnt</a>
+            </nz-list-item-action>
+          </ul>
+          {{ item }}
+        </li>
+      }
+    </ul>
+  

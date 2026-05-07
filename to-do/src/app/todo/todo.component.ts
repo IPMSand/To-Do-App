@@ -6,6 +6,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { TodoInputComponent } from '../todo-input/todo-input.component';
 import { TodoAddBtnComponent } from '../todo-add-btn/todo-add-btn.component';
+import { TodoListViewComponent } from '../todo-list-view/todo-list-view.component';
 
 
 
@@ -14,7 +15,7 @@ import { TodoAddBtnComponent } from '../todo-add-btn/todo-add-btn.component';
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [FormsModule,NzButtonModule, NzResultModule, NzIconModule, NzInputModule, TodoInputComponent, TodoAddBtnComponent ],
+  imports: [FormsModule,NzButtonModule, NzResultModule, NzIconModule, NzInputModule, TodoInputComponent, TodoAddBtnComponent ,TodoListViewComponent],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css',
   
