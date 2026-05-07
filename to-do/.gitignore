@@ -40,3 +40,40 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+
+### Zorro
+# Dependencies
+/node_modules
+/.pnpm-store
+
+# Angular Build Artifacts
+/dist
+/.angular
+/tmp
+/out-tsc
+/bazel-out
+
+# IDE / Editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+*.swp
+*.bak
+*.tmp
+
+# Environment Files (Crucial for security)
+src/environments/environment.prod.ts
+src/environments/environment.ts
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System Files
+.DS_Store
+Thumbs.db
