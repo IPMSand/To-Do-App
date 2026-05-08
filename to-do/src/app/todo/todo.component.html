@@ -1,17 +1,13 @@
-<!-- <nz-result
-    nzStatus="success"
-    nzTitle="Hello World"
-    nzSubtile="Ok">
-    <div nz-result-extra>
-        <button nz-button nzType="primary">Click Me</button>
-    </div>
-</nz-result> -->
 <div class="main-page-container" style="text-align: center;">
     <h1>My To Do Application</h1>
     <!--Input-->
-    <app-todo-input></app-todo-input>
+    <app-todo-input #todoInput></app-todo-input>
+
     <!--Btn-->
-    <app-todo-add-btn></app-todo-add-btn>
+    <app-todo-add-btn (click)="addTodo(todoInput.value)" ></app-todo-add-btn>
+    
     <!--List-->
+    <div class="list-wrapper" style="max-width: 600px; margin: 0 auto;">
     <app-todo-list-view></app-todo-list-view>
 </div>
+

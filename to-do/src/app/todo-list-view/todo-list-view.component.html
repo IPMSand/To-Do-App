@@ -1,17 +1,20 @@
-  
+<h3>To-Do Items</h3>
+<div class="list-container" style="max-width: 1200px;">
+  <ul nz-list [nzDataSource]="data" nzBordered nzSize="small">
+    <nz-list-header>All </nz-list-header>
+    @for (item of data; track item) {
+      <li nz-list-item>
+        <span nz-typography nzNoFlex>{{ item }}</span>
 
-    <h3></h3>
-    <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
-      <nz-list-header>All the To-Do List</nz-list-header>
-      @for (item of data; track item) {
-        <li nz-list-item nzNoFlex>
-          <ul nz-list-item-actions>
-            <nz-list-item-action>
-              <a (click)="msg.info('edit')">edinnnnnt</a>
-            </nz-list-item-action>
-          </ul>
-          {{ item }}
-        </li>
-      }
-    </ul>
-  
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+             <a (click)="msg.info('edit')">edit</a>
+          </nz-list-item-action>
+          <nz-list-item-action>
+            <a (click)="msg.info('delete')">delete</a>
+          </nz-list-item-action>
+        </ul>
+      </li>
+    }
+  </ul>
+</div>

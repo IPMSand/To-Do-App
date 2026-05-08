@@ -9,9 +9,6 @@ import { TodoAddBtnComponent } from '../todo-add-btn/todo-add-btn.component';
 import { TodoListViewComponent } from '../todo-list-view/todo-list-view.component';
 
 
-
-
-
 @Component({
   selector: 'app-todo',
   standalone: true,
@@ -22,8 +19,8 @@ import { TodoListViewComponent } from '../todo-list-view/todo-list-view.componen
 })
 export class TodoComponent {
   value: string = '';
-
-  onSearch(value:string): void{
-    console.log('okk', value)
+  addTodo(text: string){
+    console.log(text);
   }
+  
 }

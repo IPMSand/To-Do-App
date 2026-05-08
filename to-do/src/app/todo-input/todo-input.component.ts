@@ -11,5 +11,6 @@ import { TodoAddBtnComponent } from '../todo-add-btn/todo-add-btn.component';
   templateUrl: './todo-input.component.html'
 })
 export class TodoInputComponent {
-  value?: string;
+  value: string = '';
+  
 }
