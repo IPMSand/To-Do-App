@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { TodoService } from './todo.service';
+import type { Todo } from './todo.model';
 
 @Controller('todo')
 export class TodoController {
@@ -25,5 +35,20 @@ export class TodoController {
       isCompleted,
       isCreatedDay,
     );
+  }
+
+  // update the task done-- PUT
+  @Patch(':id')
+  updateTask(
+    @Param('id') id: string,
+    @Body('isCompleted') isCompleted: boolean,
+  ): Todo {
+    return this.todoService.updateTask(id, isCompleted);
+  }
+
+  // delete a task --- DELETE
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.todoService.removeTask(id);
   }
 }
