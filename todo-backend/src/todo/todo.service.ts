@@ -1,53 +1,62 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
-import { Todo } from './todo.model';
-import { v1 as uuid } from 'uuid';
+// import { Todoc } from './todo.model';
+// import { v1 as uuid } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Todo } from './todo.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TodoService {
-  private todos: Todo[] = [];
-  //private todos = ['task1', 'task2', 'task3'];
-  todoService: any;
+  todos: any;
+  // private todos: Todo[] = [];
+  // //private todos = ['task1', 'task2', 'task3'];
+  // todoService: any;
+  constructor(
+    @InjectRepository(Todo) private todoRepository: Repository<Todo>, 
+  ) {}
 
   // ---get all the tasks --
-  getAllTasks() {
-    return this.todos;
+  async getAllTasks(): Promise<Todo[]> {
+    return await this.todoRepository.find();
   }
 
   // --- create a task--
-  createTask(
+  async createTask(
     taskName: string,
     taskDescription: string,
     isCompleted: boolean,
     isCreatedDay: Date,
-  ) {
-    const Todos = {
-      id: uuid(),
+  ): Promise<Todo> {
+    const newTodos = this.todoRepository.create({
       taskName,
       taskDescription,
       isCompleted,
       isCreatedDay,
-    };
-    this.todos.push(Todos);
-    return Todos;
+    });
+    // this.todoRepository.save(newTodos);
+    // return newTodos;
+    return await this.todoRepository.save(newTodos); // erro r tryrun
   }
 
   // update a task-- later hvae DTO
-  updateTask(id: string, isCompleted: boolean) {
-    const taskFind = this.todos.find((t) => t.id === id);
+  async updateTask(id: number, isCompleted: boolean): Promise<Todo> {
+    const taskFind = await this.todoRepository.findOneBy({ id });
     if (!taskFind) {
       throw new NotFoundException('No Task found for update');
     }
     // this.todos = this.todos.filter((t) => t.id !== id);
     taskFind.isCompleted = isCompleted;
-    return taskFind;
+    return await this.todoRepository.save(taskFind);
   }
 
   // delete a task
-  removeTask(id: string): void {
-    const indexFind = this.todos.find((t) => t.id === id);
+  async removeTask(id: number): Promise<void> {
+    const indexFind = await this.todoRepository.delete({ id });
+    console.log('Which id deleting?:', id);
     if (!indexFind) {
-      throw new NotFoundException('No --');
+      throw new NotFoundException('No --'); // this is not working
     }
-    this.todos = this.todos.filter((t) => t.id !== id);
+    // return await this.todoRepository = this.todoRepository.filter({id});
+    console.log('ok deleted');
   }
 }
