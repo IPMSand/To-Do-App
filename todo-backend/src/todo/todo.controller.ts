@@ -22,7 +22,7 @@ export class TodoController {
     return await this.todoService.getAllTasks();
   }
 
-  // crate new task -- POST
+  // create a new task -- POST
   @Post()
   async createTask(
     @Body('taskName') taskName: string,
@@ -38,7 +38,7 @@ export class TodoController {
     );
   }
 
-  // update the task done-- PUT
+  // update a done-- PATCH
   @Patch(':id')
   async updateTask(
     @Param('id') id: number,

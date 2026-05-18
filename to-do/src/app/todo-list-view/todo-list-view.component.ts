@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzMessageService, NzMessageModule } from 'ng-zorro-antd/message';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -12,13 +12,15 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   styleUrls: ['./todo-list-view.component.css']
 })
 export class TodoListViewComponent {
-  data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.'
-  ];
+
+  @Input() todoData: any[] = [];
+  // data = [
+  //   // 'Racing car sprays burning fuel into crowd.',
+  //   // 'Japanese princess to wed commoner.',
+  //   // 'Australian walks 100km after outback crash.',
+  //   // 'Man charged over missing wedding girl.',
+  //   // 'Los Angeles battles huge wildfires.'
+  // ];
 
   constructor(public msg: NzMessageService) {}
 }
