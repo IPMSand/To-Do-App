@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NzButtonModule, NzButtonSize } from 'ng-zorro-antd/button';
@@ -15,5 +15,10 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 })
 export class TodoAddBtnComponent {
   size: NzButtonSize = 'large';
+
+  @Output() btnClick = new EventEmitter<void>();
+  onClick(): void{
+    this.btnClick.emit();
+  }
   
 }

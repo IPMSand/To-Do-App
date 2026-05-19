@@ -9,9 +9,6 @@ export class Todo {
   taskName!: string;
 
   @Column()
-  taskDescription!: string;
-
-  @Column()
   isCompleted!: boolean;
 
   @Column()

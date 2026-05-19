@@ -4,10 +4,10 @@
     <app-todo-input #todoInput></app-todo-input>
 
     <!--Btn-->
-    <app-todo-add-btn (click)="addTodo(todoInput.value)" ></app-todo-add-btn>
+    <app-todo-add-btn (click)="addTodo(todoInput.value); todoInput.clearInput()" ></app-todo-add-btn>
     
     <!--List-->
     <div class="list-wrapper" style="max-width: 600px; margin: 0 auto;">
-    <app-todo-list-view [todoData]="todos"></app-todo-list-view>
+    <app-todo-list-view [todoData]="todos" (onDelete)="deleteTodo($event)" (onToggleComplete)="toggleComplete($event)"></app-todo-list-view>
 </div>
 

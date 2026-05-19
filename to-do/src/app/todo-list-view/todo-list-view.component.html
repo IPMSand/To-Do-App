@@ -1,27 +1,25 @@
 <h3>To-Do Items</h3>
-
 <div class="list-container" style="max-width: 1200px;">
   <ul nz-list [nzDataSource]="todoData" nzBordered nzSize="small">
     <nz-list-header>All</nz-list-header>
 
-    @for (item of todoData; track item) {
+    @for (item of todoData; track item.id) {
       <li nz-list-item
           [nzActions]="[editAction, deleteAction]">
 
-        <span nz-typography nzNoFlex>
+        <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
           {{ item.taskName }}
         </span>
-        <span nz-typography nzNoFlex>
-          {{ item.taskDescription }}
-        </span>
-
-
+        <!-- <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
+          {{ item.isCreatedDay | date:'mediumDate' }}
+        </span> -->
         <ng-template #editAction>
-          <button (click)="msg.info('Task Updated as Done')">done</button> 
+          <button (click)="emitToggle(item)">{{ item.isCompleted ? 'Undo' : 'Done'}}</button> 
+          
         </ng-template>
         
         <ng-template #deleteAction>
-          <button (click)="msg.info('Task Deleted')">delete</button>
+          <button (click)="emitDelete(item.id)">delete</button>
         </ng-template>
 
       </li>

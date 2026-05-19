@@ -13,4 +13,8 @@ import { TodoAddBtnComponent } from '../todo-add-btn/todo-add-btn.component';
 export class TodoInputComponent {
   value: string = '';
   
+  clearInput(): void{
+    this.value = '';
+  }
+  
 }

@@ -10,44 +10,36 @@ import {
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
+import { CreateTodoDto } from './create-todo.dto';
+import { UpdateTodoDto } from './update-todo.dto';
 // import type { Todo } from './todo.model';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  // get all the tasks -- GET
+  // GET
   @Get()
   async getAllTasks(): Promise<Todo[]> {
     return await this.todoService.getAllTasks();
   }
 
-  // create a new task -- POST
+  // POST
   @Post()
-  async createTask(
-    @Body('taskName') taskName: string,
-    @Body('taskDescription') taskDescription: string,
-    @Body('isCompleted') isCompleted: boolean,
-    @Body('isCreatedDay') isCreatedDay: Date,
-  ): Promise<Todo> {
-    return await this.todoService.createTask(
-      taskName,
-      taskDescription,
-      isCompleted,
-      isCreatedDay,
-    );
+  async createTask(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
+    return await this.todoService.createTask(createTodoDto);
   }
 
-  // update a done-- PATCH
+  // PATCH
   @Patch(':id')
   async updateTask(
-    @Param('id') id: number,
-    @Body('isCompleted') isCompleted: boolean,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTodoDto: UpdateTodoDto,
   ): Promise<Todo> {
-    return this.todoService.updateTask(id, isCompleted);
+    return this.todoService.updateTask(id, updateTodoDto);
   }
 
-  // delete a task --- DELETE
+  // DELETE
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.todoService.removeTask(id);

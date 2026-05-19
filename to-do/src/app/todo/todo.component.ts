@@ -12,6 +12,7 @@ import { TodoService } from '../services/todo.service';
 
 
 
+
 @Component({
   selector: 'app-todo',
   standalone: true,
@@ -23,23 +24,50 @@ import { TodoService } from '../services/todo.service';
 export class TodoComponent implements OnInit {
   value: string = '';
   todos: any[] = [];
-  addTodo(text: string){
-    console.log(text);
-  }
+ 
   constructor(private todoService: TodoService){}
-  ngOnInit(): void{
-    this.todoService.getTodos().subscribe({
-      next: (response) =>{
-        this.todos =response;
-      },
-      error: (err) =>{
-        console.error('failed to fetch todo from nestjs')
-      }
-    })
+  
+  ngOnInit(): void {
+    this.loadTodos();
   }
 
-  // addTodo(text: string){
-  //   console.log(text)
-  // }
-  
+   loadTodos(): void {
+    this.todoService.getTodos().subscribe({
+      next: (response) => this.todos = response,
+      error: () => console.error('failed to fetch todo from nestjs')
+    });
+  }
+
+  // CREATE
+  addTodo(text: string){
+    if(!text || !text.trim()) return;
+
+    const newTodo = {
+      taskName: text.trim(), 
+      isCompleted: false,
+      isCreatedDay: new Date()
+    }
+    
+    this.todoService.createTodo(newTodo).subscribe({
+      next:() => {this.loadTodos();},
+      error: (err) => console.error('falied to create a new todo', err)
+    });
+  }
+
+  //UPDATE
+  toggleComplete(todo: any){
+    const updateStatus = !todo.isCompleted;
+    this.todoService.updateTodoStatus(todo.id, updateStatus).subscribe({
+      next: () => this.loadTodos(),
+      error: (err)=> console.error('failed to update status', err)
+    });
+  }
+
+  //DELETE
+  deleteTodo(id: number){
+    this.todoService.deleteTodo(id).subscribe({
+      next: ()=> this.loadTodos(),
+      error: (err) => console.error('failed to delete item', err)
+    });
+  }
 }
