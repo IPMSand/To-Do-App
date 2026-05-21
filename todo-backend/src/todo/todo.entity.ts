@@ -26,9 +26,10 @@ export class Todo {
   completedDay?: Date;
 
   @Column({ type: 'int', nullable: true })
-  userId!: number | null;
+  userId: number | null;
 
   @ManyToOne(() => User, (user) => user.todos, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'userId' })
   user!: User;
 }
+

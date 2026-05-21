@@ -15,31 +15,31 @@ import { User } from './user.entity';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  // GET - All Users
+  // Get all users
   @Get()
   getAllUsers(): Promise<User[]> {
     return this.userService.AllUsers();
   }
 
-  // GET - task count
+  // Get total task count per user
   @Get('task-count')
   getTaskCount(): Promise<Array<{ userId: number; taskCount: number }>> {
     return this.userService.TaskCount();
   }
 
-  // GET - get user by ID
+  // Get user by ID
   @Get(':id')
   getFindUser(@Param('id', ParseIntPipe) id: number): Promise<User | null> {
     return this.userService.findUser(id);
   }
 
-  // POST - Create a new user
+  // Create a new user
   @Post()
   createNewUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.newUser(createUserDto);
   }
 
-  // DELETE - Delete user (only if all the tasks are done)
+  // Delete user if tasks are done
   @Delete(':id')
   deleteUser(
     @Param('id', ParseIntPipe) id: number,

@@ -12,32 +12,31 @@ import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { AssignTaskDto } from './dto/assign-task.dto';
-// import type { Todo } from './todo.model';
+import { AssignTodoDto } from './dto/assign-task.dto';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  // GET - get all todo
+  // Get all todos
   @Get()
   getAllTodos(): Promise<Todo[]> {
     return this.todoService.AllTodos();
   }
 
-  // GET - get user's all task by userId
+  // Get user's todos by userId
   @Get(':id/all-todos')
   getAllTodoOfUser(@Param('id', ParseIntPipe) id: number): Promise<Todo[]> {
     return this.todoService.AllTodoOfUser(id);
   }
 
-  // POST - create a new todo
+  // Create a new task
   @Post()
   postNewTask(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
     return this.todoService.newTask(createTodoDto);
   }
 
-  // PATCH - update if the task is done
+  // Update task details/status
   @Patch(':id')
   async updateTaskDone(
     @Param('id', ParseIntPipe) id: number,
@@ -46,16 +45,16 @@ export class TodoController {
     return this.todoService.taskDone(id, updateTodoDto);
   }
 
-  // PATCH -- assign task to a user
+  // Assign task to a user
   @Patch(':id/assign')
   updateAssignTask(
     @Param('id', ParseIntPipe) id: number,
-    @Body() assignTaskDto: AssignTaskDto,
+    @Body() assignTaskDto: AssignTodoDto,
   ): Promise<Todo> {
     return this.todoService.assignTask(id, assignTaskDto);
   }
 
-  // DELETE - delete the todo
+  // Delete a task
   @Delete(':id')
   removeTask(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.todoService.removeTask(id);

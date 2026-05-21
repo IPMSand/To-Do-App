@@ -1,70 +1,62 @@
-import { Body, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Todo } from './todo.entity';
 import { Repository } from 'typeorm';
+import { Todo } from './todo.entity';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { AssignTodoDto } from './dto/assign-task.dto';
 
 @Injectable()
 export class TodoService {
-  // todos: any;
   constructor(
     @InjectRepository(Todo) private todoRepository: Repository<Todo>,
   ) {}
 
-  // GET - get all the todo
+  // Get all todos
   async AllTodos(): Promise<Todo[]> {
     return await this.todoRepository.find();
   }
 
-  // GET - get user's all task by userId
-  async AllTodoOfUser(id: number): Promise<Todo[]> {
-    const tasks = await this.todoRepository.find({ where: { userId: id } });
-
-    if (tasks.length === 0) {
-      throw new NotFoundException('No Tasks not found for this User.');
+  // Get all todos by userId
+  async AllTodoOfUser(userId: number): Promise<Todo[]> {
+    const tasks = await this.todoRepository.find({ where: { userId } });
+    if (!tasks || tasks.length === 0) {
+      throw new NotFoundException(`No tasks found for user ID ${userId}`);
     }
     return tasks;
   }
 
-  // POST - create a new todo
+  // Create new todo
   async newTask(createTodoDto: CreateTodoDto): Promise<Todo> {
-    const newTodos = this.todoRepository.create(createTodoDto);
-    return await this.todoRepository.save(newTodos); // erro r tryrun
+    const newTodo = this.todoRepository.create(createTodoDto);
+    return await this.todoRepository.save(newTodo);
   }
 
-  // PATCH(update) - update if the task is done
+  // Update task completion state or details
   async taskDone(id: number, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    const taskFind = await this.todoRepository.findOneBy({ id });
-    if (!taskFind) {
-      throw new NotFoundException('No Task found for update');
+    const task = await this.todoRepository.findOneBy({ id });
+    if (!task) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
     }
-    Object.assign(taskFind, updateTodoDto);
-    return await this.todoRepository.save(taskFind);
+    Object.assign(task, updateTodoDto);
+    return await this.todoRepository.save(task);
   }
 
-  // PATCH(update) - assign a task to user
-  async assignTask(id: number, assignTodoDto): Promise<Todo> {
-    const result = await this.todoRepository.findOneBy({ id });
-    if (!result) {
-      throw new NotFoundException('No Task found for update');
+  // Assign task to a user
+  async assignTask(id: number, assignTodoDto: AssignTodoDto): Promise<Todo> {
+    const task = await this.todoRepository.findOneBy({ id });
+    if (!task) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
     }
-    // Object.assign(result, assignTodoDto);
-    // return await this.todoRepository.save(result);
-
-    // merge the userId
-    this.todoRepository.merge(result, assignTodoDto);
-    return await this.todoRepository.save(result);
+    this.todoRepository.merge(task, assignTodoDto);
+    return await this.todoRepository.save(task);
   }
 
-  // DELETE - delete the todo
+  // Delete a todo
   async removeTask(id: number): Promise<void> {
     const result = await this.todoRepository.delete({ id });
-    console.log('Which id deleting?:', id);
-
     if (result.affected === 0) {
-      throw new NotFoundException('No User found for this id');
+      throw new NotFoundException(`Task with ID ${id} not found`);
     }
-    console.log('ok deleted');
   }
 }

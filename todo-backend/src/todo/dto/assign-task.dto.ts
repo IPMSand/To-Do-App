@@ -1,3 +1,3 @@
-export class AssignTaskDto {
+export class AssignTodoDto {
   userId!: number;
 }
