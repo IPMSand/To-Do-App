@@ -10,38 +10,54 @@ import {
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
-import { CreateTodoDto } from './create-todo.dto';
-import { UpdateTodoDto } from './update-todo.dto';
+import { CreateTodoDto } from './dto/create-todo.dto';
+import { UpdateTodoDto } from './dto/update-todo.dto';
+import { AssignTaskDto } from './dto/assign-task.dto';
 // import type { Todo } from './todo.model';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  // GET
+  // GET - get all todo
   @Get()
-  async getAllTasks(): Promise<Todo[]> {
-    return await this.todoService.getAllTasks();
+  getAllTodos(): Promise<Todo[]> {
+    return this.todoService.AllTodos();
   }
 
-  // POST
+  // GET - get user's all task by userId
+  @Get(':id/all-todos')
+  getAllTodoOfUser(@Param('id', ParseIntPipe) id: number): Promise<Todo[]> {
+    return this.todoService.AllTodoOfUser(id);
+  }
+
+  // POST - create a new todo
   @Post()
-  async createTask(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
-    return await this.todoService.createTask(createTodoDto);
+  postNewTask(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
+    return this.todoService.newTask(createTodoDto);
   }
 
-  // PATCH
+  // PATCH - update if the task is done
   @Patch(':id')
-  async updateTask(
+  async updateTaskDone(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateTodoDto: UpdateTodoDto,
   ): Promise<Todo> {
-    return this.todoService.updateTask(id, updateTodoDto);
+    return this.todoService.taskDone(id, updateTodoDto);
   }
 
-  // DELETE
+  // PATCH -- assign task to a user
+  @Patch(':id/assign')
+  updateAssignTask(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() assignTaskDto: AssignTaskDto,
+  ): Promise<Todo> {
+    return this.todoService.assignTask(id, assignTaskDto);
+  }
+
+  // DELETE - delete the todo
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  removeTask(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.todoService.removeTask(id);
   }
 }
