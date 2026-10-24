@@ -72,6 +72,7 @@ export class UserTableComponent implements OnInit {
           };
         });
         
+        
         this.listOfDisplayData = [...this.listOfData];
         this.loading = false;
       },
