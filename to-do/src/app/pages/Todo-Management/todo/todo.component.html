@@ -1,13 +1,16 @@
-<div class="main-page-container" style="text-align: center;">
-    <h1>My To Do Application</h1>
+<div class="main-page-container">
+    
+    <h1>Todo List</h1>
     <!--Input-->
     <app-todo-input #todoInput></app-todo-input>
 
     <!--Btn-->
+    <div>
     <app-todo-add-btn (click)="addTodo(todoInput.value); todoInput.clearInput()" ></app-todo-add-btn>
-    
+    </div>
     <!--List-->
     <div class="list-wrapper" style="max-width: 600px; margin: 0 auto;">
     <app-todo-list-view [todoData]="todos" (onDelete)="deleteTodo($event)" (onToggleComplete)="toggleComplete($event)"></app-todo-list-view>
+    <!-- <app-todo-table></app-todo-table></div> -->
 </div>
 

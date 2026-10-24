@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 
-// Force the system to find the .env file relative to this module file
+
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { User } from './user/user.entity';
@@ -19,7 +19,7 @@ dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
       host: 'localhost',
       port: 3306,
       username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD, // Safely hidden now!
+      password: process.env.DB_PASSWORD,
       database: 'todoapp',
       synchronize: true,
       logging: true,

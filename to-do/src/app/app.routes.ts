@@ -1,10 +1,17 @@
 import { Routes } from '@angular/router';
-import { TodoComponent } from './todo/todo.component';
-import { TodoInputComponent } from './todo-input/todo-input.component';
-import { TodoAddBtnComponent } from './todo-add-btn/todo-add-btn.component';
+import { UserComponent } from './pages/User-Management/user/user.component';
+import { NavbarComponent } from './pages/navbar/navbar.component';
+import { TodoComponent } from './pages/Todo-Management/todo/todo.component';
+// import { UserComponent } from './user/user.component';
 
 export const routes: Routes = [
-    {path: '', component:TodoComponent},
-    // // {path: '', component:TodoInputComponent}
-    // {path: '', component:TodoAddBtnComponent}
+  {
+    path: '',
+    component: NavbarComponent,
+    children: [
+      { path: '', redirectTo: 'todos', pathMatch: 'full' },
+      { path: 'todos', component: TodoComponent },
+      { path: 'users', component: UserComponent }
+    ]
+  }
 ];

@@ -1,0 +1,72 @@
+<nz-table 
+  #nzTable 
+  [nzData]="listOfDisplayData" 
+  [nzLoading]="loading" 
+  nzTableLayout="fixed">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th nzCustomFilter>
+        Name
+        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+          <span nz-icon nzType="search"></span>
+        </nz-filter-trigger>
+      </th>
+      <th>Email</th>
+      <th>Todo Count</th>
+      <th nzWidth="120px">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of nzTable.data; track data.id) {
+      <tr>
+        <td>{{ data.id }}</td>
+        <td>{{ data.userName }}</td>
+        <td>{{ data.email }}</td>
+        <td>
+          <!-- Styled badge or simple text for your task counts -->
+          {{ data.taskCount }}
+        </td>
+        <td>
+          <button 
+            nz-button 
+            nzType="primary" 
+            nzDanger 
+            (click)="onDeleteUser(data.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>
+
+<!-- Search Dropdown Menu Definition -->
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box" style="padding: 8px;">
+      <input 
+        type="text" 
+        nz-input 
+        placeholder="Search name" 
+        [(ngModel)]="searchValue" 
+        style="width: 188px; margin-bottom: 8px; display: block;" 
+        (keyup.enter)="search()" />
+      <button 
+        nz-button 
+        nzSize="small" 
+        nzType="primary" 
+        (click)="search()" 
+        style="width: 90px; margin-right: 8px;">
+        Search
+      </button>
+      <button 
+        nz-button 
+        nzSize="small" 
+        (click)="reset()" 
+        style="width: 90px;">
+        Reset
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>

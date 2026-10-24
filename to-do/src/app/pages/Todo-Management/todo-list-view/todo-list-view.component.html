@@ -6,20 +6,29 @@
     @for (item of todoData; track item.id) {
       <li nz-list-item
           [nzActions]="[editAction, deleteAction]">
+        
+        <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
+          {{ item.id }}
+        </span>
 
         <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
           {{ item.taskName }}
         </span>
-        <!-- <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
-          {{ item.isCreatedDay | date:'mediumDate' }}
-        </span> -->
+        <span nz-typography nzNoFlex [style.textDecoration]="item.isCompleted ? 'line-through' : 'none'">
+          Assigned User ID
+        </span>
+        <!-- <ng-template #editAction>
+          <button (click)="emitToggle(item)">Status</button> 
+        </ng-template> -->
         <ng-template #editAction>
           <button (click)="emitToggle(item)">{{ item.isCompleted ? 'Undo' : 'Done'}}</button> 
-          
         </ng-template>
         
         <ng-template #deleteAction>
           <button (click)="emitDelete(item.id)">delete</button>
+        </ng-template>
+        <ng-template #deleteAction>
+          <button (click)="emitDelete(item.id)">Assign</button>
         </ng-template>
 
       </li>
